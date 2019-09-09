@@ -3,7 +3,7 @@ from django.views.generic import (ListView,
                                   DeleteView,
                                   UpdateView,
                                   CreateView)
-from .models import Article
+from .models import Article, Comment
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
@@ -18,7 +18,6 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
-
 
 class ArticleListView(ListView):
     model = Article
