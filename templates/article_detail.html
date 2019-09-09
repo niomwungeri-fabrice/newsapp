@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load temp_utils %}
+
+{% block content %}
+    <div class="article-entry">
+        <h2>{{ object.title }}</h2>
+        <p>by {{ object.author }} | {{ object.date }}</p> <p>{{ object.body }}</p>
+    </div>
+    <p>
+    <a href="{% url 'article_edit' article.pk %}">Edit</a> |
+    <a href="{% url 'article_delete' article.pk %}">Delete</a>
+    </p>
+    <div class="row bootstrap snippets">
+    <div class="col-md-6 col-md-offset-2 col-sm-12">
+        <div class="comment-wrapper">
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <textarea class="form-control" placeholder="Add a comment..." rows="3"></textarea>
+                    <br>
+                    <button type="button" class="btn btn-info pull-right">Post</button>
+                    <div class="clearfix"></div>
+                    <hr>
+                    <ul class="media-list">
+                    {% for comment in article.comments.all %}
+                        <li class="media">
+                            <a href="#" class="pull-left">
+                                <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                            </a>
+                            <div class="media-body">
+                                <span class="text-muted pull-right">
+                                    <small class="text-muted">{% calculate_time_age comment.created_at %}</small>
+                                </span>
+                                <strong class="text-success">@{{ comment.user }}</strong>
+                                <p>
+                                    {{comment}}
+                                </p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>Back to <a href="{% url 'article_list' %}">All Articles</a></p> 
+{% endblock content %}
